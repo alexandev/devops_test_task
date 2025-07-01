@@ -1,0 +1,5 @@
+---
+postgres_test:
+  db: "test"
+  user: "testuser"
+  pass: "testpass"

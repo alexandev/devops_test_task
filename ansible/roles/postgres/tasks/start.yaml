@@ -1,0 +1,8 @@
+---
+- name: Starting and enabling postgres via systemd
+  become: true
+  systemd_service:
+    name: postgresql
+    # daemon_reload: true
+    state: started
+    enabled: true

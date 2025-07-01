@@ -1,0 +1,29 @@
+---
+- name: Block - run as root
+  become: true
+  become_user: postgres
+
+  block:
+    - name: "Creating db user {{ postgres_test.user }}"
+      postgresql_user:
+        state: present
+        name: "{{ postgres_test.user }}"
+        password: "{{ postgres_test.pass }}"
+
+    - name: "Granting {{ postgres_test.user }} user access to {{ postgres_test.db }} db"
+      postgresql_privs:
+        type: database
+        database: "{{ postgres_test.db }}"
+        roles: "{{ postgres_test.user }}"
+        grant_option: no
+        privs: all
+
+    - name: "Allowing md5 connection for the {{ postgres_test.user }} user"
+      postgresql_pg_hba:
+        dest: "~/data/pg_hba.conf"
+        contype: host
+        databases: all
+        method: md5
+        users: "{{ postgres_test.user }}"
+        create: true
+      notify: restart_postgres

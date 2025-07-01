@@ -1,0 +1,36 @@
+---
+- name: Block
+  delegate_to: "{{ groups['ansible_control'][0] }}"
+  run_once: true
+  block:
+    - name: Setting ssh-key path
+      set_fact:
+        ssh_key_path: "/home/{{ lookup('env', 'USER') }}/.ssh/ansible_{{ env_name }}"
+
+    - name: Generating ansible ssh-key on ansible_control_host
+      user:
+        name: "{{ lookup('env', 'USER') }}"
+        generate_ssh_key: true
+        ssh_key_type: ed25519
+        ssh_key_file: "{{ ssh_key_path }}"
+        # ssh_key_passphrase: "{{ _vault.ansible.ssh_pass }}"
+        ssh_key_comment: "ansible_{{ env_name }} generated on {{ hostvars[groups['ansible_control'][0]].ansible_hostname }}"
+        force: no
+
+    - name: Reading created public ssh-key
+      set_fact:
+        ssh_key_public: "{{ lookup('file', '{{ ssh_key_path }}.pub') }}"
+
+    - name: Removing host from known_hosts if it was added already
+      command: "ssh-keygen -R {{ hostvars[item].ansible_host }}"
+      ignore_errors: true
+      loop: "{{ play_hosts }}"
+
+    - name: Pushing public ssh-key to hosts
+      expect:
+        command: "ssh-copy-id -i {{ ssh_key_path }}.pub {{ ansible_user }}@{{ hostvars[item].ansible_host }}"
+        responses:
+          (?i)authenticity of host: "yes"
+          (?i)password: "{{ ansible_become_pass }}"
+      loop: "{{ play_hosts }}"
+      # no_log: true #hide ansible logging for this task to keep secrets from getting leaked

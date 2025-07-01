@@ -1,0 +1,8 @@
+---
+web:
+  hosts:
+    web01:
+
+db:
+  hosts:
+    db01:

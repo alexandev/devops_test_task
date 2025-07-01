@@ -1,0 +1,6 @@
+---
+- import_tasks: install.yaml
+- import_tasks: initialize.yaml
+- import_tasks: start.yaml
+- import_tasks: create_db.yaml
+- import_tasks: create_user.yaml

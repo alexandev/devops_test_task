@@ -1,0 +1,19 @@
+# local files
+.etc/
+.files/
+.old_deployment/
+.vscode/
+.vagrant/
+.venv/
+__pycache__/
+
+# drawio backups and temp files
+*.drawio.bkp
+*.drawio.dtmp
+
+# certificates
+*.cer
+*.crt
+*.pem
+*.key
+*.p7b

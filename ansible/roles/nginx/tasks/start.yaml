@@ -1,0 +1,8 @@
+---
+- name: Starting and enabling nginx via systemd
+  become: true
+  systemd_service:
+    name: nginx
+    # daemon_reload: true
+    state: started
+    enabled: true

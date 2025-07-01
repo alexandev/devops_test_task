@@ -1,0 +1,24 @@
+---
+- name: Block - run as root
+  become: true
+
+  block:
+    - name: Uploading main nginx config to host
+      template:
+        src: "{{ item }}"
+        dest: "/etc/nginx/{{ item | replace('.j2', '') }}"
+        owner: "root"
+        group: "root"
+        mode: "0640"
+      with_items:
+        - "nginx.conf.j2"
+
+    - name: Uploading nginx configs to host
+      template:
+        src: "{{ item }}"
+        dest: "/etc/nginx/conf.d/{{ item | replace('.j2', '') }}"
+        owner: "root"
+        group: "root"
+        mode: "0640"
+      with_items:
+        - "web.conf.j2"

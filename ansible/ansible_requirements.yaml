@@ -1,0 +1,10 @@
+---
+collections:
+  # a lot of useful things
+  - community.general
+  # linux
+  - ansible.posix
+  # docker
+  - community.docker
+  # certificates
+  - community.crypto

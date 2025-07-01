@@ -1,0 +1,9 @@
+server {
+    listen 80;
+
+    location / {
+        add_header Content-Type text/html;
+        charset utf-8;
+        return 200 "<html><body>Welcome to web01</body></html>";
+    }
+}

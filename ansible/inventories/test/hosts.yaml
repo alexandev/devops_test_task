@@ -1,0 +1,10 @@
+---
+all:
+  hosts:
+    web01:
+      ansible_hostname: web01
+      ansible_host: 10.0.0.101
+
+    db01:
+      ansible_hostname: db01
+      ansible_host: 10.0.0.102

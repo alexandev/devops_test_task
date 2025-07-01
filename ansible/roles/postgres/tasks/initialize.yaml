@@ -1,0 +1,13 @@
+---
+- name: Block - run as root
+  become: true
+
+  block:
+    - name: Checking if postgres is already initialized
+      stat:
+        path: "/var/lib/pgsql/data/pg_hba.conf"
+      register: postgres_data
+
+    - name: Initializing postgres
+      shell: "postgresql-setup initdb"
+      when: not postgres_data.stat.exists

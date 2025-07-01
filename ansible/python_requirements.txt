@@ -1,0 +1,6 @@
+### linux ###
+ansible
+pexpect
+
+### docker ###
+requests

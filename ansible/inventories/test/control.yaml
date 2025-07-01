@@ -1,0 +1,9 @@
+---
+ansible_control:
+  hosts:
+    ansible_control_host:
+      ansible_hostname: admin01
+      ansible_host: localhost
+      ansible_connection: local
+      # ansible_python_interpreter: /opt/ansible/.venv/bin/python3
+      ansible_become_pass: ansible #safe since this is a local vm

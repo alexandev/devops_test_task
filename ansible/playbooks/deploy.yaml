@@ -1,0 +1,17 @@
+---
+- name: Deploying deployment deployantly
+  hosts: all
+  # gather_facts: false
+
+  tasks:
+    - name: Deploy web
+      import_role:
+        name: nginx
+      when: "'web' in group_names"
+      tags: [web]
+
+    - name: Deploy db
+      import_role:
+        name: postgres
+      when: "'db' in group_names"
+      tags: [db]

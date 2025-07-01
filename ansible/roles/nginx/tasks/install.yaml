@@ -1,0 +1,6 @@
+---
+- name: Installing nginx package
+  become: true
+  dnf:
+    name: nginx
+    state: present

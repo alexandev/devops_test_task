@@ -1,0 +1,6 @@
+---
+- name: reload_nginx
+  become: true
+  systemd_service:
+    name: nginx
+    state: reloaded

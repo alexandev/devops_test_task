@@ -1,0 +1,27 @@
+---
+- name: Common host operations
+  hosts: "{{ target_host }}"
+  gather_facts: false
+
+  vars_prompt:
+    - name: target_host
+      private: false
+      prompt: |
+        Enter the target host or host group
+
+        Available hosts:
+        {% for k in groups.all %}
+        - {{ k }}
+        {% endfor %}
+
+        Available host groups:
+        {% for k in groups %}
+        - {{ k }}
+        {% endfor %}
+
+  tasks:
+    - name: Generate ssh key and push it to hosts
+      import_role:
+        name: etc
+        tasks_from: propagate_ssh.yaml
+      tags: [never, propagate_ssh]

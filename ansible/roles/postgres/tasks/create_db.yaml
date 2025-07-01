@@ -1,0 +1,7 @@
+---
+- name: Creating db
+  become: true
+  become_user: postgres
+  community.postgresql.postgresql_db:
+    name: "{{ postgres_test.db }}"
+    state: present
